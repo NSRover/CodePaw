@@ -14,6 +14,11 @@
 		BE946DFD19A498E300813291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE946DFB19A498E300813291 /* Main.storyboard */; };
 		BE946DFF19A498E300813291 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE946DFE19A498E300813291 /* Images.xcassets */; };
 		BE946E0B19A498E300813291 /* CodePawTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946E0A19A498E300813291 /* CodePawTests.m */; };
+		BE946E1719A4994200813291 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946E1619A4994200813291 /* NetworkManager.m */; };
+		BE946E1A19A49D2700813291 /* NetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946E1919A49D2700813291 /* NetworkConstants.m */; };
+		BE946E1D19A4A79500813291 /* DataInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946E1C19A4A79500813291 /* DataInterface.m */; };
+		BE946E2219A4AA8200813291 /* QuestionBrief.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946E2119A4AA8200813291 /* QuestionBrief.m */; };
+		BE946E2919A4E7A700813291 /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946E2819A4E7A700813291 /* Answer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +45,16 @@
 		BE946E0419A498E300813291 /* CodePawTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodePawTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE946E0919A498E300813291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE946E0A19A498E300813291 /* CodePawTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodePawTests.m; sourceTree = "<group>"; };
+		BE946E1519A4994200813291 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		BE946E1619A4994200813291 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		BE946E1819A49D2700813291 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConstants.h; sourceTree = "<group>"; };
+		BE946E1919A49D2700813291 /* NetworkConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkConstants.m; sourceTree = "<group>"; };
+		BE946E1B19A4A79500813291 /* DataInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataInterface.h; sourceTree = "<group>"; };
+		BE946E1C19A4A79500813291 /* DataInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataInterface.m; sourceTree = "<group>"; };
+		BE946E2019A4AA8200813291 /* QuestionBrief.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionBrief.h; sourceTree = "<group>"; };
+		BE946E2119A4AA8200813291 /* QuestionBrief.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionBrief.m; sourceTree = "<group>"; };
+		BE946E2719A4E7A700813291 /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
+		BE946E2819A4E7A700813291 /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +96,7 @@
 		BE946DED19A498E300813291 /* CodePaw */ = {
 			isa = PBXGroup;
 			children = (
+				BE946E1419A498F900813291 /* Data */,
 				BE946DF219A498E300813291 /* AppDelegate.h */,
 				BE946DF319A498E300813291 /* AppDelegate.m */,
 				BE946DF819A498E300813291 /* ViewController.h */,
@@ -117,6 +133,39 @@
 				BE946E0919A498E300813291 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE946E1419A498F900813291 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BE946E1F19A4A95B00813291 /* Models */,
+				BE946E1E19A4A94800813291 /* Network */,
+				BE946E1B19A4A79500813291 /* DataInterface.h */,
+				BE946E1C19A4A79500813291 /* DataInterface.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		BE946E1E19A4A94800813291 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BE946E1519A4994200813291 /* NetworkManager.h */,
+				BE946E1619A4994200813291 /* NetworkManager.m */,
+				BE946E1819A49D2700813291 /* NetworkConstants.h */,
+				BE946E1919A49D2700813291 /* NetworkConstants.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		BE946E1F19A4A95B00813291 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE946E2019A4AA8200813291 /* QuestionBrief.h */,
+				BE946E2119A4AA8200813291 /* QuestionBrief.m */,
+				BE946E2719A4E7A700813291 /* Answer.h */,
+				BE946E2819A4E7A700813291 /* Answer.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,9 +267,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE946E2919A4E7A700813291 /* Answer.m in Sources */,
+				BE946E1D19A4A79500813291 /* DataInterface.m in Sources */,
+				BE946E1A19A49D2700813291 /* NetworkConstants.m in Sources */,
+				BE946E2219A4AA8200813291 /* QuestionBrief.m in Sources */,
 				BE946DF419A498E300813291 /* AppDelegate.m in Sources */,
 				BE946DF119A498E300813291 /* main.m in Sources */,
 				BE946DFA19A498E300813291 /* ViewController.m in Sources */,
+				BE946E1719A4994200813291 /* NetworkManager.m in Sources */,
 				BE946DF719A498E300813291 /* CodePaw.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,6 +460,7 @@
 				BE946E1019A498E300813291 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE946E1119A498E300813291 /* Build configuration list for PBXNativeTarget "CodePawTests" */ = {
 			isa = XCConfigurationList;
@@ -414,6 +469,7 @@
 				BE946E1319A498E300813291 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "QuestionBrief.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) DataInterface * dataInterface;
 
 @end
 
@@ -16,12 +19,23 @@
             
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.dataInterface = [DataInterface sharedInterface];
+    _dataInterface.delegate = self;
+    [[DataInterface sharedInterface] searchForTerm:@"iOS"];
+//    [[DataInterface sharedInterface] getAnswersForQuestionID:@"25406254"];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark Data protocol
+
+- (void)dataAvailableForType:(TaskType)type {
+    QuestionBrief * question = [_dataInterface.searchResults objectAtIndex:0];
+    NSLog(@"Title : %@", question.title);
+    NSLog(@"Body : %@", question.body);
 }
 
 @end
