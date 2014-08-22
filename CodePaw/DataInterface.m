@@ -126,7 +126,8 @@ static DataInterface * _sharedInterface = nil;
     
     //Add mandatory
     [searchQuery appendFormat:@"&order=desc&sort=activity"];
-    
+    //Add filter to include body
+    [searchQuery appendFormat:@"&filter=!)5__yhx532i5DpQarU18_l3hWQdH"];
     
     return searchQuery;
 }
@@ -142,6 +143,8 @@ static DataInterface * _sharedInterface = nil;
     
     //Add mandatory
     [answersQuery appendFormat:@"&order=desc&sort=activity"];
+    //Add filter for body
+    [answersQuery appendFormat:@"&filter=!1zSsisJjQAIq1LeCuU._i"];
     
     return answersQuery;
 }
