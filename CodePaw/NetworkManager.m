@@ -63,6 +63,7 @@ static NetworkManager * _sharedManager = nil;
 
 - (void)startRequestWithString:(NSString *)requestString {
     NSURLSessionTask * task = [self taskForURLRequestString:requestString];
+//    NSLog(@"Request:%@", task.originalRequest.URL.absoluteString);
     task.taskDescription = requestString;
     
     if (!task) {
@@ -83,17 +84,15 @@ static NetworkManager * _sharedManager = nil;
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
-    NSError * error;
-    id dataObject = [NSJSONSerialization JSONObjectWithData:data
-                                                    options:0
-                                                      error:&error];
-    if (error) {
-        NSLog(@"* NetworkManager - error getting data for request %@ \n Error - %@", dataTask.originalRequest.URL.absoluteString, [error description]);
+    
+    if (!data) {
+        NSLog(@"* NetworkManager - error getting data for request %@", dataTask.originalRequest.URL.absoluteString);
+        return;
     }
     
     //Callback to delegate
     if (_delegate && [_delegate respondsToSelector:@selector(receivedData:forRequestURLString:)]) {
-        [_delegate receivedData:dataObject forRequestURLString:dataTask.taskDescription];
+        [_delegate receivedData:data forRequestURLString:dataTask.taskDescription];
     }
 }
 

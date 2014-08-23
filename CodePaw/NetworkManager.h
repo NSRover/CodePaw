@@ -10,7 +10,7 @@
 
 @protocol NetworkProtocol <NSObject>
 
-- (void)receivedData:(id)data forRequestURLString:(NSString *)requestString;
+- (void)receivedData:(NSData *)data forRequestURLString:(NSString *)requestString;
 
 @end
 

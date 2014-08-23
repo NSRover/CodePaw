@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE0FEAB019A7231400466B0F /* StorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FEAAF19A7231400466B0F /* StorageManager.m */; };
+		BE0FEABA19A730F200466B0F /* SearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FEAB919A730F200466B0F /* SearchHistory.m */; };
 		BE946DF119A498E300813291 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF019A498E300813291 /* main.m */; };
 		BE946DF419A498E300813291 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF319A498E300813291 /* AppDelegate.m */; };
 		BE946DF719A498E300813291 /* CodePaw.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF519A498E300813291 /* CodePaw.xcdatamodeld */; };
@@ -32,6 +34,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE0FEAAE19A7231400466B0F /* StorageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageManager.h; sourceTree = "<group>"; };
+		BE0FEAAF19A7231400466B0F /* StorageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageManager.m; sourceTree = "<group>"; };
+		BE0FEAB419A728A900466B0F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		BE0FEAB819A730F200466B0F /* SearchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchHistory.h; path = ../SearchHistory.h; sourceTree = "<group>"; };
+		BE0FEAB919A730F200466B0F /* SearchHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchHistory.m; path = ../SearchHistory.m; sourceTree = "<group>"; };
 		BE946DEB19A498E300813291 /* CodePaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodePaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE946DEF19A498E300813291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE946DF019A498E300813291 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -75,6 +82,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE0FEAAD19A722FC00466B0F /* Local Storage */ = {
+			isa = PBXGroup;
+			children = (
+				BE946DF519A498E300813291 /* CodePaw.xcdatamodeld */,
+				BE0FEABB19A730FC00466B0F /* Models */,
+				BE0FEAAE19A7231400466B0F /* StorageManager.h */,
+				BE0FEAAF19A7231400466B0F /* StorageManager.m */,
+			);
+			name = "Local Storage";
+			sourceTree = "<group>";
+		};
+		BE0FEABB19A730FC00466B0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE0FEAB819A730F200466B0F /* SearchHistory.h */,
+				BE0FEAB919A730F200466B0F /* SearchHistory.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		BE0FEABC19A7312200466B0F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE946DF819A498E300813291 /* ViewController.h */,
+				BE946DF919A498E300813291 /* ViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		BE946DE219A498E300813291 = {
 			isa = PBXGroup;
 			children = (
@@ -96,14 +132,10 @@
 		BE946DED19A498E300813291 /* CodePaw */ = {
 			isa = PBXGroup;
 			children = (
+				BE0FEABC19A7312200466B0F /* ViewControllers */,
 				BE946E1419A498F900813291 /* Data */,
-				BE946DF219A498E300813291 /* AppDelegate.h */,
-				BE946DF319A498E300813291 /* AppDelegate.m */,
-				BE946DF819A498E300813291 /* ViewController.h */,
-				BE946DF919A498E300813291 /* ViewController.m */,
 				BE946DFB19A498E300813291 /* Main.storyboard */,
 				BE946DFE19A498E300813291 /* Images.xcassets */,
-				BE946DF519A498E300813291 /* CodePaw.xcdatamodeld */,
 				BE946DEE19A498E300813291 /* Supporting Files */,
 			);
 			path = CodePaw;
@@ -112,6 +144,8 @@
 		BE946DEE19A498E300813291 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BE946DF219A498E300813291 /* AppDelegate.h */,
+				BE946DF319A498E300813291 /* AppDelegate.m */,
 				BE946DEF19A498E300813291 /* Info.plist */,
 				BE946DF019A498E300813291 /* main.m */,
 			);
@@ -138,6 +172,8 @@
 		BE946E1419A498F900813291 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				BE0FEAB419A728A900466B0F /* Constants.h */,
+				BE0FEAAD19A722FC00466B0F /* Local Storage */,
 				BE946E1F19A4A95B00813291 /* Models */,
 				BE946E1E19A4A94800813291 /* Network */,
 				BE946E1B19A4A79500813291 /* DataInterface.h */,
@@ -270,10 +306,12 @@
 				BE946E2919A4E7A700813291 /* Answer.m in Sources */,
 				BE946E1D19A4A79500813291 /* DataInterface.m in Sources */,
 				BE946E1A19A49D2700813291 /* NetworkConstants.m in Sources */,
+				BE0FEABA19A730F200466B0F /* SearchHistory.m in Sources */,
 				BE946E2219A4AA8200813291 /* QuestionBrief.m in Sources */,
 				BE946DF419A498E300813291 /* AppDelegate.m in Sources */,
 				BE946DF119A498E300813291 /* main.m in Sources */,
 				BE946DFA19A498E300813291 /* ViewController.m in Sources */,
+				BE0FEAB019A7231400466B0F /* StorageManager.m in Sources */,
 				BE946E1719A4994200813291 /* NetworkManager.m in Sources */,
 				BE946DF719A498E300813291 /* CodePaw.xcdatamodeld in Sources */,
 			);
@@ -390,9 +428,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = CodePaw/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodePaw/CodePaw-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -401,9 +442,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = CodePaw/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodePaw/CodePaw-Bridging-Header.h";
 			};
 			name = Release;
 		};

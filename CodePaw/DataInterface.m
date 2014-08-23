@@ -7,6 +7,8 @@
 //
 
 #import "DataInterface.h"
+#import "StorageManager.h"
+
 #import "QuestionBrief.h"
 #import "Answer.h"
 
@@ -18,6 +20,7 @@ static DataInterface * _sharedInterface = nil;
 @interface DataInterface()
 
 @property (nonatomic, strong) NetworkManager * network;
+@property (nonatomic, strong) StorageManager * storage;
 
 @end
 
@@ -99,7 +102,7 @@ static DataInterface * _sharedInterface = nil;
 #pragma mark Helpers
 
 - (void)makeNetworkRequestForString:(NSString *)requestString {
-    [_network startRequestWithString:[NSString stringWithFormat:@"%@&site=stackoverflow", requestString]];
+    [_network startRequestWithString:requestString];
 }
 
 - (NSString *)searchQueryWithDict:(NSDictionary *)dict {
@@ -125,9 +128,11 @@ static DataInterface * _sharedInterface = nil;
     }
     
     //Add mandatory
-    [searchQuery appendFormat:@"&order=desc&sort=activity"];
+    [searchQuery appendString:@"&order=desc&sort=activity"];
+    //Add site
+    [searchQuery appendString:@"&site=stackoverflow"];
     //Add filter to include body
-    [searchQuery appendFormat:@"&filter=!)5__yhx532i5DpQarU18_l3hWQdH"];
+//    [searchQuery appendString:@"&filter=!9YdnSJBlX"];
     
     return searchQuery;
 }
@@ -142,9 +147,11 @@ static DataInterface * _sharedInterface = nil;
     [answersQuery appendFormat:@"&pagesize=%d", [[dict objectForKey:@"pagesize"] intValue]];
     
     //Add mandatory
-    [answersQuery appendFormat:@"&order=desc&sort=activity"];
+    [answersQuery appendString:@"&order=desc&sort=activity"];
+    //Add site
+    [answersQuery appendString:@"&site=stackoverflow"];
     //Add filter for body
-    [answersQuery appendFormat:@"&filter=!1zSsisJjQAIq1LeCuU._i"];
+    [answersQuery appendString:@"&filter=!1zSsisJjQAIq1LeCuU._i"];
     
     return answersQuery;
 }
@@ -167,6 +174,23 @@ static DataInterface * _sharedInterface = nil;
     }
 }
 
+- (NSString *)searchTermFromRequestString:(NSString *)requestString {
+//    /search?pagesize=2&intitle=iOS&page=1&order=desc&sort=activity&site=stackoverflow
+    
+    NSString * searchTerm = nil;
+    
+    NSArray * dividedByAmp = [requestString componentsSeparatedByString:@"&"];
+    for (NSString * string in dividedByAmp) {
+        if ([string containsString:@"intitle"]) {
+            NSArray * titleComponents = [string componentsSeparatedByString:@"="];
+            searchTerm = [titleComponents objectAtIndex:1];
+            break;
+        }
+    }
+    NSLog(@"**** %@", searchTerm);
+    return searchTerm;
+}
+
 #pragma mark Initialization
 
 + (DataInterface *)sharedInterface {
@@ -187,12 +211,22 @@ static DataInterface * _sharedInterface = nil;
     self.network = [NetworkManager sharedManager];
     _network.delegate = self;
     
+    self.storage = [StorageManager sharedManager];
+    
     return self;
 }
 
 #pragma mark Network Protocol
 
-- (void)receivedData:(id)data forRequestURLString:(NSString *)requestString {
+- (void)receivedData:(NSData *)data forRequestURLString:(NSString *)requestString {
+    //Convert JSON
+    NSError * error;
+    id dataObject = [NSJSONSerialization JSONObjectWithData:data
+                                                    options:0
+                                                      error:&error];
+    if (error) {
+        NSLog(@"* DataInterface - error getting data for request %@ \n Error - %@", requestString, [error description]);
+    }
     
     switch ([self typeForRequestString:requestString]) {
         case TaskTypeUnknown:
@@ -201,7 +235,9 @@ static DataInterface * _sharedInterface = nil;
             
         case TaskTypeSearch:
         {
-            NSDictionary * dict = (NSDictionary *)data;
+            //save in local storage
+            [_storage saveSearchData:data forSearchTerm:[self searchTermFromRequestString:requestString]];
+            NSDictionary * dict = (NSDictionary *)dataObject;
             [self populateSearchResultsWithDict:dict];
             [self notifyDelegateForType:TaskTypeSearch];
         }
@@ -209,7 +245,7 @@ static DataInterface * _sharedInterface = nil;
             
         case TaskTypeAnswers:
         {
-            NSDictionary * dict = (NSDictionary *)data;
+            NSDictionary * dict = (NSDictionary *)dataObject;
             [self populateAnswersResultWithDict:dict];
             [self notifyDelegateForType:TaskTypeAnswers];
         }
