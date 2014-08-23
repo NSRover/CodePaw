@@ -2,3 +2,5 @@
 *.xcuserstate
 
 CodePaw.xcodeproj/project.xcworkspace/xcuserdata/nirbhay.xcuserdatad/UserInterfaceState.xcuserstate
+
+.DS_Store
