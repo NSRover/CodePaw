@@ -13,7 +13,7 @@
 #import "Answer.h"
 
 #define PAGE_NUMBER 1
-#define PAGE_COUNT 2
+#define PAGE_COUNT 20
 
 static DataInterface * _sharedInterface = nil;
 
@@ -132,7 +132,7 @@ static DataInterface * _sharedInterface = nil;
     //Add site
     [searchQuery appendString:@"&site=stackoverflow"];
     //Add filter to include body
-//    [searchQuery appendString:@"&filter=!9YdnSJBlX"];
+    [searchQuery appendString:@"&filter=!9YdnSJBlX"];
     
     return searchQuery;
 }
@@ -187,7 +187,6 @@ static DataInterface * _sharedInterface = nil;
             break;
         }
     }
-    NSLog(@"**** %@", searchTerm);
     return searchTerm;
 }
 

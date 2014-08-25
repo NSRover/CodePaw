@@ -24,7 +24,7 @@
     self.dataInterface = [DataInterface sharedInterface];
     _dataInterface.delegate = self;
     [[DataInterface sharedInterface] searchForTerm:@"iOS"];
-//    [[DataInterface sharedInterface] getAnswersForQuestionID:@"25440388"];
+    [[DataInterface sharedInterface] getAnswersForQuestionID:@"25440388"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,8 +35,8 @@
 #pragma mark Data protocol
 
 - (void)dataAvailableForType:(TaskType)type {
-    QuestionBrief * question = [_dataInterface.searchResults objectAtIndex:0];
-    NSLog(@"Title : %@", question.title);
+//    QuestionBrief * question = [_dataInterface.searchResults objectAtIndex:0];
+//    NSLog(@"Title : %@", question.title);
 //    NSLog(@"Body : %@", question.body);
     
 //    Answer * answer = [_dataInterface.answers objectAtIndex:0];

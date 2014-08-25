@@ -85,6 +85,8 @@ static NetworkManager * _sharedManager = nil;
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
     
+    NSLog(@"************* did receive data");
+    
     if (!data) {
         NSLog(@"* NetworkManager - error getting data for request %@", dataTask.originalRequest.URL.absoluteString);
         return;
