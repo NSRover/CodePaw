@@ -24,7 +24,7 @@
     self.dataInterface = [DataInterface sharedInterface];
     _dataInterface.delegate = self;
     [[DataInterface sharedInterface] searchForTerm:@"iOS"];
-    [[DataInterface sharedInterface] getAnswersForQuestionID:@"25440388"];
+//    [[DataInterface sharedInterface] getAnswersForQuestionID:@"25440388"];
 }
 
 - (void)didReceiveMemoryWarning {

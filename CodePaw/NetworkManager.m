@@ -50,12 +50,13 @@ static NetworkManager * _sharedManager = nil;
     return [BASE_URL stringByAppendingString:requestString];
 }
 
-- (NSURLSessionTask *)taskForURLRequestString:(NSString *)requestString {
+- (NSURLSessionDownloadTask *)taskForURLRequestString:(NSString *)requestString {
     NSString * URLString = [self URLStringForRequestString:requestString];
     NSURL * URL = [NSURL URLWithString:URLString];
     NSURLRequest * request = [[NSURLRequest alloc] initWithURL:URL];
     
-    NSURLSessionTask *task = [_sesssion dataTaskWithRequest:request];
+//    NSURLSessionTask *task = [_sesssion dataTaskWithRequest:request];
+    NSURLSessionDownloadTask * task = [_sesssion downloadTaskWithRequest:request];
     return task;
 }
 
@@ -85,8 +86,6 @@ static NetworkManager * _sharedManager = nil;
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
     
-    NSLog(@"************* did receive data");
-    
     if (!data) {
         NSLog(@"* NetworkManager - error getting data for request %@", dataTask.originalRequest.URL.absoluteString);
         return;
@@ -96,6 +95,52 @@ static NetworkManager * _sharedManager = nil;
     if (_delegate && [_delegate respondsToSelector:@selector(receivedData:forRequestURLString:)]) {
         [_delegate receivedData:data forRequestURLString:dataTask.taskDescription];
     }
+}
+
+#pragma mark DownloadTask Delegate
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location {
+    
+    NSData* data = [NSData dataWithContentsOfURL:location];
+    
+    if (!data) {
+        NSLog(@"* NetworkManager - error getting data for request %@", downloadTask.originalRequest.URL.absoluteString);
+        return;
+    }
+    
+    //Callback to delegate
+    if (_delegate && [_delegate respondsToSelector:@selector(receivedData:forRequestURLString:)]) {
+        [_delegate receivedData:data forRequestURLString:downloadTask.taskDescription];
+    }
+    
+//    //Write data in main thread
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        VideoData * videoData = [_storage videoDataForURL:downloadTask.originalRequest.URL];
+//        if (videoData) {
+//            if ([data writeToURL:[NSURL fileURLWithPath:videoData.videoFilePath] atomically:YES]) {
+//                //                NSLog(@"Downloaded: %@", videoData.videoTitle);
+//                [_storage completedDownloadForURL:downloadTask.originalRequest.URL];
+//                
+//                //notify
+//                [[NSNotificationCenter defaultCenter] postNotificationName:DL_COMPLETE
+//                                                                    object:self
+//                                                                  userInfo:@{DL_COMPLETE_N_TASK: downloadTask}];
+//            }
+//            else {
+//                NSLog(@"Data not saved");
+//            }
+//        }
+//        else {
+//            NSLog(@"Data meta data not found, not saved.");
+//        }
+//    });
+//    
+//    //invoke background session completion handler
+//    [self invokeBackgroundSessionCompletionHandlerForSession:session];
+//
+//    
 }
 
 @end

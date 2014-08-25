@@ -18,7 +18,8 @@
 <
     NSURLSessionDelegate,
     NSURLSessionTaskDelegate,
-    NSURLSessionDataDelegate
+    NSURLSessionDataDelegate,
+    NSURLSessionDownloadDelegate
 >
 
 @property (nonatomic, strong) id <NetworkProtocol> delegate;
