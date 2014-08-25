@@ -13,7 +13,7 @@
 #import "Answer.h"
 
 #define PAGE_NUMBER 1
-#define PAGE_COUNT 20
+#define PAGE_COUNT 2
 
 static DataInterface * _sharedInterface = nil;
 
@@ -133,6 +133,7 @@ static DataInterface * _sharedInterface = nil;
     [searchQuery appendString:@"&site=stackoverflow"];
     //Add filter to include body
     [searchQuery appendString:@"&filter=!9YdnSJBlX"];
+//    [searchQuery appendString:@"&filter=!7qBwspM_L4C9G5zhshoZKt*(O)b9*HqLOy"];
     
     return searchQuery;
 }
@@ -151,7 +152,7 @@ static DataInterface * _sharedInterface = nil;
     //Add site
     [answersQuery appendString:@"&site=stackoverflow"];
     //Add filter for body
-    [answersQuery appendString:@"&filter=!1zSsisJjQAIq1LeCuU._i"];
+    [answersQuery appendString:@"&filter=!4*SyY(4Kifp0M9dZX"];
     
     return answersQuery;
 }
@@ -188,6 +189,14 @@ static DataInterface * _sharedInterface = nil;
         }
     }
     return searchTerm;
+}
+
+- (NSString *)questionIDFromRequestString:(NSString *)requestString {
+    
+    NSArray * dividedBySlash = [requestString componentsSeparatedByString:@"/"];
+    NSString * questionID = [dividedBySlash objectAtIndex:2];
+
+    return questionID;
 }
 
 #pragma mark Initialization
@@ -244,6 +253,8 @@ static DataInterface * _sharedInterface = nil;
             
         case TaskTypeAnswers:
         {
+            //save in local storage
+            [_storage saveAnswerData:data forQuestionID:[self questionIDFromRequestString:requestString]];
             NSDictionary * dict = (NSDictionary *)dataObject;
             [self populateAnswersResultWithDict:dict];
             [self notifyDelegateForType:TaskTypeAnswers];

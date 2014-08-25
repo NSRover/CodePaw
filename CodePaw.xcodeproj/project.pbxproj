@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BE0FEAB019A7231400466B0F /* StorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FEAAF19A7231400466B0F /* StorageManager.m */; };
 		BE0FEABA19A730F200466B0F /* SearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FEAB919A730F200466B0F /* SearchHistory.m */; };
+		BE77FE6919AB7F7E00F99404 /* AnswerHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE77FE6819AB7F7E00F99404 /* AnswerHistory.m */; };
 		BE946DF119A498E300813291 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF019A498E300813291 /* main.m */; };
 		BE946DF419A498E300813291 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF319A498E300813291 /* AppDelegate.m */; };
 		BE946DF719A498E300813291 /* CodePaw.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF519A498E300813291 /* CodePaw.xcdatamodeld */; };
@@ -39,6 +40,8 @@
 		BE0FEAB419A728A900466B0F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		BE0FEAB819A730F200466B0F /* SearchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchHistory.h; path = ../SearchHistory.h; sourceTree = "<group>"; };
 		BE0FEAB919A730F200466B0F /* SearchHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchHistory.m; path = ../SearchHistory.m; sourceTree = "<group>"; };
+		BE77FE6719AB7F7E00F99404 /* AnswerHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerHistory.h; sourceTree = "<group>"; };
+		BE77FE6819AB7F7E00F99404 /* AnswerHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerHistory.m; sourceTree = "<group>"; };
 		BE946DEB19A498E300813291 /* CodePaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodePaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE946DEF19A498E300813291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE946DF019A498E300813291 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 		BE0FEABB19A730FC00466B0F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BE77FE6719AB7F7E00F99404 /* AnswerHistory.h */,
+				BE77FE6819AB7F7E00F99404 /* AnswerHistory.m */,
 				BE0FEAB819A730F200466B0F /* SearchHistory.h */,
 				BE0FEAB919A730F200466B0F /* SearchHistory.m */,
 			);
@@ -311,6 +316,7 @@
 				BE946DF419A498E300813291 /* AppDelegate.m in Sources */,
 				BE946DF119A498E300813291 /* main.m in Sources */,
 				BE946DFA19A498E300813291 /* ViewController.m in Sources */,
+				BE77FE6919AB7F7E00F99404 /* AnswerHistory.m in Sources */,
 				BE0FEAB019A7231400466B0F /* StorageManager.m in Sources */,
 				BE946E1719A4994200813291 /* NetworkManager.m in Sources */,
 				BE946DF719A498E300813291 /* CodePaw.xcdatamodeld in Sources */,

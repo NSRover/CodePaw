@@ -8,12 +8,17 @@
 
 #import "StorageManager.h"
 #import "Constants.h"
+
 #import "SearchHistory.h"
+#import "AnswerHistory.h"
 
 @interface StorageManager()
 
 @property (nonatomic, strong) NSFetchRequest * searchFetchRequest;
 @property (nonatomic, strong) NSArray * searchFetchedData;
+
+@property (nonatomic, strong) NSFetchRequest * answerFetchRequest;
+@property (nonatomic, strong) NSArray * answerFetchedData;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -50,6 +55,29 @@ static StorageManager * _storageManager = nil;
     return nil;
 }
 
+- (void)saveAnswerData:(NSData *)data forQuestionID:(NSString *)questionID {
+    //Store data
+    NSString * filePath = [self storeData:data];
+    if (!filePath) {
+        NSLog(@"* Storage Manager - There was a problem storing data for %@", questionID);
+        return;
+    }
+    
+    //Check if already present in Database
+    NSString * existingFilePath = [self answerDataPathForQuestionID:questionID];
+    if (existingFilePath) {
+        //Remove old file
+        [self deleteDataAtEndPath:existingFilePath];
+    }
+    
+    [self newAnswerEntryWithQuestionID:questionID andDataPath:filePath];
+    [self saveContext];
+}
+
+- (NSData *)answerDataForQuestionID:(NSString *)questionID {
+    return nil;
+}
+
 #pragma mark Helpers
 
 - (void)deleteDataAtEndPath:(NSString *)endPath {
@@ -69,6 +97,17 @@ static StorageManager * _storageManager = nil;
     NSString * filePath = nil;
     for (SearchHistory * history in _searchFetchedData) {
         if ([history.searchTerm isEqualToString:searchTerm]) {
+            filePath = history.dataLocation;
+            break;
+        }
+    }
+    return filePath;
+}
+
+- (NSString *)answerDataPathForQuestionID:(NSString *)questionID {
+    NSString * filePath = nil;
+    for (AnswerHistory * history in _answerFetchedData) {
+        if ([history.questionID isEqualToString:questionID]) {
             filePath = history.dataLocation;
             break;
         }
@@ -129,6 +168,27 @@ static StorageManager * _storageManager = nil;
     }
 }
 
+- (void)newAnswerEntryWithQuestionID:(NSString *)questionID andDataPath:(NSString *)dataPath {
+    BOOL found = NO;
+    //If already exists, update
+    for (AnswerHistory * history in _answerFetchedData) {
+        if ([history.questionID isEqualToString:questionID]) {
+            history.dataLocation = dataPath;
+            found = YES;
+            NSLog(@"Updating existing DB entry for %@", questionID);
+            break;
+        }
+    }
+    //Else new entry
+    if (!found) {
+        AnswerHistory * answerHistory = [NSEntityDescription insertNewObjectForEntityForName:@"AnswerHistory"
+                                                                      inManagedObjectContext:_managedObjectContext];
+        answerHistory.questionID = questionID;
+        answerHistory.dataLocation = dataPath;
+        NSLog(@"New DB entry for %@", questionID);
+    }
+}
+
 - (NSString *)storeData:(NSData *)data {
     NSString * endPath = [self endPathForNewData];
     
@@ -170,6 +230,7 @@ static StorageManager * _storageManager = nil;
 
     //fetch searches data
     [self fetchSearches];
+    [self fetchAnswers];
     
     return self;
 }
@@ -271,6 +332,31 @@ static StorageManager * _storageManager = nil;
         
         for (SearchHistory * historyObject in _searchFetchedData) {
             NSLog(@"Already searched for %@", historyObject.searchTerm);
+        }
+    }
+    else {
+        NSLog(@"Fetch from CoreData failed : %@", [error localizedDescription]);
+    }
+}
+
+- (void)fetchAnswers {
+    //Fetch request
+    if (!_answerFetchRequest) {
+        NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription * entity = [NSEntityDescription entityForName:@"AnswerHistory"
+                                                   inManagedObjectContext:_managedObjectContext];
+        [fetchRequest setEntity:entity];
+        self.answerFetchRequest = fetchRequest;
+    }
+    
+    NSError *error;
+    NSArray *fetchedObjects = [_managedObjectContext executeFetchRequest:_answerFetchRequest
+                                                                   error:&error];
+    if (!error) {
+        self.answerFetchedData = fetchedObjects;
+        
+        for (AnswerHistory * historyObject in _answerFetchedData) {
+            NSLog(@"Already have answers for %@", historyObject.questionID);
         }
     }
     else {
