@@ -28,7 +28,17 @@ static DataInterface * _sharedInterface = nil;
 
 #pragma mark Public
 
+- (NSArray *)previouslySearchedTerms {
+    return [_storage previouslySearchedTerms];
+}
+
 - (void)searchForTerm:(NSString *)searchTerm {
+    
+    //Return result from cache
+    [self provideLocalDataForSearchTerm:searchTerm];
+    return;
+    
+    //Make a network request
     [self makeNetworkRequestForString:[self searchQueryWithDict:@{@"page":[NSNumber numberWithInt:PAGE_NUMBER],
                                                                   @"pagesize":[NSNumber numberWithInt:PAGE_COUNT],
                                                                   @"intitle":searchTerm}]];
@@ -97,6 +107,28 @@ static DataInterface * _sharedInterface = nil;
         }
     }
     self.answers = answers;
+}
+
+#pragma mark Logic 
+
+- (void)provideLocalDataForSearchTerm:(NSString *)searchTerm {
+    NSData * data = [_storage searchDataForSearchTerm:searchTerm];
+    [self useData:data forSearchTerm:searchTerm];
+}
+
+- (void)useData:(NSData *)data forSearchTerm:(NSString *)searchTerm {
+    NSError * error;
+    id dataObject = [NSJSONSerialization JSONObjectWithData:data
+                                                    options:0
+                                                      error:&error];
+    if (error) {
+        NSLog(@"* DataInterface - error parsing data for search Term %@ \n Error - %@", searchTerm, [error description]);
+    }
+    
+    
+    NSDictionary * dict = (NSDictionary *)dataObject;
+    [self populateSearchResultsWithDict:dict];
+    [self notifyDelegateForType:TaskTypeSearch];
 }
 
 #pragma mark Helpers
@@ -182,7 +214,7 @@ static DataInterface * _sharedInterface = nil;
     
     NSArray * dividedByAmp = [requestString componentsSeparatedByString:@"&"];
     for (NSString * string in dividedByAmp) {
-        if ([string containsString:@"intitle"]) {
+        if ([string rangeOfString:@"intitle"].location != NSNotFound) {
             NSArray * titleComponents = [string componentsSeparatedByString:@"="];
             searchTerm = [titleComponents objectAtIndex:1];
             break;
@@ -243,11 +275,13 @@ static DataInterface * _sharedInterface = nil;
             
         case TaskTypeSearch:
         {
+            NSString * searchTerm = [self searchTermFromRequestString:requestString];
+            
             //save in local storage
-            [_storage saveSearchData:data forSearchTerm:[self searchTermFromRequestString:requestString]];
-            NSDictionary * dict = (NSDictionary *)dataObject;
-            [self populateSearchResultsWithDict:dict];
-            [self notifyDelegateForType:TaskTypeSearch];
+            [_storage saveSearchData:data forSearchTerm:searchTerm];
+            
+            //Use
+            [self useData:data forSearchTerm:searchTerm];
         }
             break;
             

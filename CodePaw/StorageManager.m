@@ -52,6 +52,11 @@ static StorageManager * _storageManager = nil;
 }
 
 - (NSData *)searchDataForSearchTerm:(NSString *)searchTerm {
+    for (SearchHistory * history in _searchFetchedData) {
+        if ([history.searchTerm isEqualToString:searchTerm]) {
+            return [self dataFromFilePath:history.dataLocation];
+        }
+    }
     return nil;
 }
 
@@ -76,6 +81,14 @@ static StorageManager * _storageManager = nil;
 
 - (NSData *)answerDataForQuestionID:(NSString *)questionID {
     return nil;
+}
+
+- (NSArray *)previouslySearchedTerms {
+    NSMutableArray * searches = [[NSMutableArray alloc] initWithCapacity:_searchFetchedData.count];
+    for (SearchHistory * history in _searchFetchedData) {
+        [searches addObject:history.searchTerm];
+    }
+    return searches;
 }
 
 #pragma mark Helpers
@@ -203,6 +216,17 @@ static StorageManager * _storageManager = nil;
     return nil;
 }
 
+- (NSData *)dataFromFilePath:(NSString *)filePath {
+    
+    NSArray *paths =
+    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString * path = [NSString stringWithFormat:@"%@%@", documentsPath, filePath];
+    
+    NSData * data = [NSData dataWithContentsOfFile:path];
+    return data;
+}
+
 #pragma mark initialisation
 
 + (StorageManager *)sharedManager {
@@ -312,6 +336,9 @@ static StorageManager * _storageManager = nil;
             abort();
         }
     }
+    
+    [self fetchSearches];
+    [self fetchAnswers];
 }
 
 - (void)fetchSearches {
@@ -329,10 +356,6 @@ static StorageManager * _storageManager = nil;
                                                                    error:&error];
     if (!error) {
         self.searchFetchedData = fetchedObjects;
-        
-        for (SearchHistory * historyObject in _searchFetchedData) {
-            NSLog(@"Already searched for %@", historyObject.searchTerm);
-        }
     }
     else {
         NSLog(@"Fetch from CoreData failed : %@", [error localizedDescription]);
@@ -354,10 +377,6 @@ static StorageManager * _storageManager = nil;
                                                                    error:&error];
     if (!error) {
         self.answerFetchedData = fetchedObjects;
-        
-        for (AnswerHistory * historyObject in _answerFetchedData) {
-            NSLog(@"Already have answers for %@", historyObject.questionID);
-        }
     }
     else {
         NSLog(@"Fetch from CoreData failed : %@", [error localizedDescription]);

@@ -21,4 +21,6 @@
 - (void)saveAnswerData:(NSData *)data forQuestionID:(NSString *)questionID;
 - (NSData *)answerDataForQuestionID:(NSString *)questionID;
 
+- (NSArray *)previouslySearchedTerms;
+
 @end

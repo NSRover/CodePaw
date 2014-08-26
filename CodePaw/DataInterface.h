@@ -24,6 +24,8 @@ typedef enum {
 @interface DataInterface : NSObject <NetworkProtocol>
 
 + (DataInterface *)sharedInterface;
+
+- (NSArray *)previouslySearchedTerms;
 - (void)searchForTerm:(NSString *)searchTerm;
 - (void)getAnswersForQuestionID:(NSString *)questionID;
 
