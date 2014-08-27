@@ -80,6 +80,11 @@ static StorageManager * _storageManager = nil;
 }
 
 - (NSData *)answerDataForQuestionID:(NSString *)questionID {
+    for (AnswerHistory * answer in _answerFetchedData) {
+        if ([answer.questionID isEqualToString:questionID]) {
+            return [self dataFromFilePath:answer.dataLocation];
+        }
+    }
     return nil;
 }
 

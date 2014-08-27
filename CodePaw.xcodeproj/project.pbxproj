@@ -26,6 +26,8 @@
 		BED2251919AC9C0E00E1169D /* QuestionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2251819AC9C0E00E1169D /* QuestionsTableViewController.m */; };
 		BED2251C19ACA1F500E1169D /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2251B19ACA1F500E1169D /* QuestionTableViewCell.m */; };
 		BED2251F19ACB15600E1169D /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2251E19ACB15600E1169D /* QuestionViewController.m */; };
+		BEF6AE8F19AE63720044EFF1 /* AnswersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF6AE8E19AE63720044EFF1 /* AnswersTableViewController.m */; };
+		BEF6AE9219AE641C0044EFF1 /* AnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF6AE9119AE641C0044EFF1 /* AnswerTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,10 @@
 		BED2251B19ACA1F500E1169D /* QuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
 		BED2251D19ACB15600E1169D /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
 		BED2251E19ACB15600E1169D /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewController.m; sourceTree = "<group>"; };
+		BEF6AE8D19AE63720044EFF1 /* AnswersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswersTableViewController.h; sourceTree = "<group>"; };
+		BEF6AE8E19AE63720044EFF1 /* AnswersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswersTableViewController.m; sourceTree = "<group>"; };
+		BEF6AE9019AE641C0044EFF1 /* AnswerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerTableViewCell.h; sourceTree = "<group>"; };
+		BEF6AE9119AE641C0044EFF1 /* AnswerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,8 @@
 				BED2251819AC9C0E00E1169D /* QuestionsTableViewController.m */,
 				BED2251D19ACB15600E1169D /* QuestionViewController.h */,
 				BED2251E19ACB15600E1169D /* QuestionViewController.m */,
+				BEF6AE8D19AE63720044EFF1 /* AnswersTableViewController.h */,
+				BEF6AE8E19AE63720044EFF1 /* AnswersTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -233,6 +241,8 @@
 				BEABA2A519AC8C72003D122F /* PreviouslySearchedTermTableViewCell.m */,
 				BED2251A19ACA1F500E1169D /* QuestionTableViewCell.h */,
 				BED2251B19ACA1F500E1169D /* QuestionTableViewCell.m */,
+				BEF6AE9019AE641C0044EFF1 /* AnswerTableViewCell.h */,
+				BEF6AE9119AE641C0044EFF1 /* AnswerTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -342,12 +352,14 @@
 				BE946E1D19A4A79500813291 /* DataInterface.m in Sources */,
 				BE946E1A19A49D2700813291 /* NetworkConstants.m in Sources */,
 				BE0FEABA19A730F200466B0F /* SearchHistory.m in Sources */,
+				BEF6AE9219AE641C0044EFF1 /* AnswerTableViewCell.m in Sources */,
 				BE946E2219A4AA8200813291 /* QuestionBrief.m in Sources */,
 				BE946DF419A498E300813291 /* AppDelegate.m in Sources */,
 				BED2251319AC9B5B00E1169D /* SearchViewController.m in Sources */,
 				BEABA2A619AC8C72003D122F /* PreviouslySearchedTermTableViewCell.m in Sources */,
 				BE946DF119A498E300813291 /* main.m in Sources */,
 				BED2251F19ACB15600E1169D /* QuestionViewController.m in Sources */,
+				BEF6AE8F19AE63720044EFF1 /* AnswersTableViewController.m in Sources */,
 				BE77FE6919AB7F7E00F99404 /* AnswerHistory.m in Sources */,
 				BE0FEAB019A7231400466B0F /* StorageManager.m in Sources */,
 				BE946E1719A4994200813291 /* NetworkManager.m in Sources */,

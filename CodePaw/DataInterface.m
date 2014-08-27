@@ -36,7 +36,6 @@ static DataInterface * _sharedInterface = nil;
     
     //Return result from cache
     [self provideLocalDataForSearchTerm:searchTerm];
-    return;
     
     //Make a network request
     [self makeNetworkRequestForString:[self searchQueryWithDict:@{@"page":[NSNumber numberWithInt:PAGE_NUMBER],
@@ -45,6 +44,11 @@ static DataInterface * _sharedInterface = nil;
 }
 
 - (void)getAnswersForQuestionID:(NSString *)questionID {
+    
+    //Return from cache
+    [self provideLocalAnswersForQuestionID:questionID];
+
+    //Network request
     [self makeNetworkRequestForString:[self answersQueryWithDict:@{@"page":[NSNumber numberWithInt:PAGE_NUMBER],
                                                                   @"pagesize":[NSNumber numberWithInt:PAGE_COUNT],
                                                                   @"question_id":questionID}]];
@@ -61,7 +65,7 @@ static DataInterface * _sharedInterface = nil;
     question.title = [dict objectForKey:@"title"];
     question.votes = [[dict objectForKey:@"score"] intValue];
     question.numberOfAnswers = [[dict objectForKey:@"answer_count"] intValue];
-    question.questionID = [NSString stringWithFormat:@"%ld", (long)[dict objectForKey:@"question_id"]];
+    question.questionID = [NSString stringWithFormat:@"%@", (NSNumber *)[dict objectForKey:@"question_id"]];
     question.body = [dict objectForKey:@"body"];
     
     return question;
@@ -70,7 +74,7 @@ static DataInterface * _sharedInterface = nil;
 - (Answer *)answerFromDict:(NSDictionary *)dict {
     Answer * answer = [[Answer alloc] init];
     
-    answer.questionID = [dict objectForKey:@"question_id"];
+    answer.questionID = [NSString stringWithFormat:@"%ld", (long)[dict objectForKey:@"question_id"]];
     answer.answerID = [dict objectForKey:@"answer_id"];
     answer.ownerName = [[dict objectForKey:@"owner"] objectForKey:@"display_name"];
     answer.ownerLink = [[dict objectForKey:@"owner"] objectForKey:@"link"];
@@ -109,11 +113,17 @@ static DataInterface * _sharedInterface = nil;
     self.answers = answers;
 }
 
-#pragma mark Logic 
+#pragma mark Logic
 
 - (void)provideLocalDataForSearchTerm:(NSString *)searchTerm {
     NSData * data = [_storage searchDataForSearchTerm:searchTerm];
-    [self useData:data forSearchTerm:searchTerm];
+    if (data) {
+        [self useData:data forSearchTerm:searchTerm];
+    }
+    else {
+        self.searchResults = nil;
+        [self notifyDelegateForType:TaskTypeSearch];
+    }
 }
 
 - (void)useData:(NSData *)data forSearchTerm:(NSString *)searchTerm {
@@ -129,6 +139,32 @@ static DataInterface * _sharedInterface = nil;
     NSDictionary * dict = (NSDictionary *)dataObject;
     [self populateSearchResultsWithDict:dict];
     [self notifyDelegateForType:TaskTypeSearch];
+}
+
+- (void)provideLocalAnswersForQuestionID:(NSString *)questionID {
+    NSData * data = [_storage answerDataForQuestionID:questionID];
+    if (data) {
+        [self useData:data forAnswersToQeustionID:questionID];
+    }
+    else {
+        self.answers = nil;
+        [self notifyDelegateForType:TaskTypeAnswers];
+    }
+}
+
+- (void)useData:(NSData *)data forAnswersToQeustionID:(NSString *)questionID {
+    NSError * error;
+    id dataObject = [NSJSONSerialization JSONObjectWithData:data
+                                                    options:0
+                                                      error:&error];
+    if (error) {
+        NSLog(@"* DataInterface - error parsing data for answers to question ID %@ \n Error - %@", questionID, [error description]);
+    }
+    
+    
+    NSDictionary * dict = (NSDictionary *)dataObject;
+    [self populateAnswersResultWithDict:dict];
+    [self notifyDelegateForType:TaskTypeAnswers];
 }
 
 #pragma mark Helpers

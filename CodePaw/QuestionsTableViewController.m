@@ -29,6 +29,7 @@
     self.title = [NSString stringWithFormat:@"Question for %@", _searchTerm];
     
     self.dataInterface = [DataInterface sharedInterface];
+    _dataInterface.delegate = self;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 }
@@ -43,7 +44,7 @@
 - (void)dataAvailableForType:(TaskType)type {
     //In case of new data, refresh
     if (type == TaskTypeSearch) {
-        [self.tableView reloadData];
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
 }
 

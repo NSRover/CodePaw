@@ -7,6 +7,8 @@
 //
 
 #import "QuestionViewController.h"
+#import "DataInterface.h"
+#import "AnswersTableViewController.h"
 
 @interface QuestionViewController ()
 
@@ -23,6 +25,7 @@
     self.titleTextView.text = _question.title;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", _question.votes];
     [self.profileButton setTitle:[NSString stringWithFormat:@"%@'s profile", _question.ownerName] forState:UIControlStateNormal];
+
     if (_question.numberOfAnswers > 0) {
         self.answersButton.title = [NSString stringWithFormat:@"Answers(%d)", _question.numberOfAnswers];
     }
@@ -31,7 +34,17 @@
     }
     
     [self.bodyWebView loadHTMLString:_question.body baseURL:nil];
+    
+    //Make network call to get answers
+    [[DataInterface sharedInterface] getAnswersForQuestionID:_question.questionID];
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    AnswersTableViewController * answersViewController = (AnswersTableViewController *)[segue destinationViewController];
+    answersViewController.questionID = _question.questionID;
+}
+
 
 #pragma mark Webview delegate
 
@@ -43,18 +56,19 @@
     return YES;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+#pragma mark IBOutlets
 
 - (IBAction)answersButtonTapped:(id)sender {
+    if (_question.numberOfAnswers > 0) {
+        [self performSegueWithIdentifier:@"pushAnswers" sender:nil];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"No Answers"
+                                    message:@"This question has not been answered yet"
+                                   delegate:nil
+                          cancelButtonTitle:@":("
+                          otherButtonTitles:nil, nil] show];
+    }
 }
 
 - (IBAction)profileButtonTapped:(id)sender {

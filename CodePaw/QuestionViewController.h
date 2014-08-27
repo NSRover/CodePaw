@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "QuestionBrief.h"
 
-@interface QuestionViewController : UIViewController <UIWebViewDelegate>
+@interface QuestionViewController : UIViewController
+<
+    UIWebViewDelegate
+>
 
 @property (nonatomic, strong) QuestionBrief * question;
 
