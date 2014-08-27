@@ -20,8 +20,7 @@
 
 #pragma mark Naviagational
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.dataInterface = [DataInterface sharedInterface];

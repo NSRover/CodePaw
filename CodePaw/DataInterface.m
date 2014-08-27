@@ -13,7 +13,7 @@
 #import "Answer.h"
 
 #define PAGE_NUMBER 1
-#define PAGE_COUNT 2
+#define PAGE_COUNT 5
 
 static DataInterface * _sharedInterface = nil;
 

@@ -37,14 +37,6 @@
     self.dataInterface = [DataInterface sharedInterface];
     
     self.previousSearchTerms = [_dataInterface previouslySearchedTerms];
-    
-    //    [[DataInterface sharedInterface] searchForTerm:@"SpriteKit"];
-    //    [[DataInterface sharedInterface] getAnswersForQuestionID:@"22734157"];
-    
-    //    NSLog(@"Previously searched terms");
-    //    for (NSString * searchTerm in [_dataInterface previouslySearchedTerms]) {
-    //        NSLog(@"    %@", searchTerm);
-    //    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -61,23 +53,12 @@
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(dismissKeyboard)];
     [self.overlayView addGestureRecognizer:tapGesture];
-    
-    //        [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)dismissKeyboard {
     self.overlayView.hidden = YES;
     [self.searchBar resignFirstResponder];
 }
-
-//#pragma mark Data protocol
-//
-//- (void)dataAvailableForType:(TaskType)type {
-//    if (type == TaskTypeSearch) {
-//        NSLog(@"proceed");
-//        [self performSegueWithIdentifier:@"pushQuestions" sender:self];
-//    }
-//}
 
 #pragma mark UITableView Delegate
 
