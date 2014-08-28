@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSString * searchTerm;
 @property (weak, nonatomic) IBOutlet UIView *overlayView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *overlayLabel;
 @end
 
@@ -36,12 +37,18 @@
     
     self.dataInterface = [DataInterface sharedInterface];
     
-    self.previousSearchTerms = [_dataInterface previouslySearchedTerms];
+//    self.previousSearchTerms = [_dataInterface previouslySearchedTerms];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     QuestionsTableViewController * questionsViewController = (QuestionsTableViewController *)[segue destinationViewController];
     questionsViewController.searchTerm = _searchTerm;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.previousSearchTerms = [_dataInterface previouslySearchedTerms];
+    [_tableView reloadData];
+    [super viewWillAppear:animated];
 }
 
 #pragma mark UI

@@ -52,7 +52,7 @@ static NetworkManager * _sharedManager = nil;
 
 - (NSURLSessionDownloadTask *)taskForURLRequestString:(NSString *)requestString {
     NSString * URLString = [self URLStringForRequestString:requestString];
-    NSURL * URL = [NSURL URLWithString:URLString];
+    NSURL * URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest * request = [[NSURLRequest alloc] initWithURL:URL];
     
 //    NSURLSessionTask *task = [_sesssion dataTaskWithRequest:request];

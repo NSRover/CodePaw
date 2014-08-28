@@ -67,6 +67,7 @@
                     <connections>
                         <outlet property="overlayView" destination="iHK-YC-aAJ" id="b6Z-fM-DNO"/>
                         <outlet property="searchBar" destination="h5s-lU-Y6a" id="itv-P3-rX1"/>
+                        <outlet property="tableView" destination="CVz-fN-KGr" id="d0T-mZ-aRM"/>
                         <segue destination="hpH-Z6-leK" kind="push" identifier="pushQuestions" id="RWm-I5-lsH"/>
                     </connections>
                 </viewController>
