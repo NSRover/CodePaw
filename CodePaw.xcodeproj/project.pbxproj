@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BE0FEAB019A7231400466B0F /* StorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FEAAF19A7231400466B0F /* StorageManager.m */; };
-		BE0FEABA19A730F200466B0F /* SearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FEAB919A730F200466B0F /* SearchHistory.m */; };
+		BE56389619AEF9FE0030FF2C /* SearchHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE56389519AEF9FE0030FF2C /* SearchHistory.m */; };
 		BE77FE6919AB7F7E00F99404 /* AnswerHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE77FE6819AB7F7E00F99404 /* AnswerHistory.m */; };
 		BE946DF119A498E300813291 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF019A498E300813291 /* main.m */; };
 		BE946DF419A498E300813291 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE946DF319A498E300813291 /* AppDelegate.m */; };
@@ -44,8 +44,8 @@
 		BE0FEAAE19A7231400466B0F /* StorageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageManager.h; sourceTree = "<group>"; };
 		BE0FEAAF19A7231400466B0F /* StorageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageManager.m; sourceTree = "<group>"; };
 		BE0FEAB419A728A900466B0F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		BE0FEAB819A730F200466B0F /* SearchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchHistory.h; path = ../SearchHistory.h; sourceTree = "<group>"; };
-		BE0FEAB919A730F200466B0F /* SearchHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchHistory.m; path = ../SearchHistory.m; sourceTree = "<group>"; };
+		BE56389419AEF9FE0030FF2C /* SearchHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchHistory.h; sourceTree = "<group>"; };
+		BE56389519AEF9FE0030FF2C /* SearchHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchHistory.m; sourceTree = "<group>"; };
 		BE77FE6719AB7F7E00F99404 /* AnswerHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerHistory.h; sourceTree = "<group>"; };
 		BE77FE6819AB7F7E00F99404 /* AnswerHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerHistory.m; sourceTree = "<group>"; };
 		BE946DEB19A498E300813291 /* CodePaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodePaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +106,7 @@
 		BE0FEAAD19A722FC00466B0F /* Local Storage */ = {
 			isa = PBXGroup;
 			children = (
+				BE946DF519A498E300813291 /* CodePaw.xcdatamodeld */,
 				BE0FEABB19A730FC00466B0F /* Models */,
 				BE0FEAAE19A7231400466B0F /* StorageManager.h */,
 				BE0FEAAF19A7231400466B0F /* StorageManager.m */,
@@ -116,10 +117,10 @@
 		BE0FEABB19A730FC00466B0F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BE56389419AEF9FE0030FF2C /* SearchHistory.h */,
+				BE56389519AEF9FE0030FF2C /* SearchHistory.m */,
 				BE77FE6719AB7F7E00F99404 /* AnswerHistory.h */,
 				BE77FE6819AB7F7E00F99404 /* AnswerHistory.m */,
-				BE0FEAB819A730F200466B0F /* SearchHistory.h */,
-				BE0FEAB919A730F200466B0F /* SearchHistory.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -201,11 +202,10 @@
 		BE946E1419A498F900813291 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				BE946DF519A498E300813291 /* CodePaw.xcdatamodeld */,
-				BE0FEAB419A728A900466B0F /* Constants.h */,
 				BE0FEAAD19A722FC00466B0F /* Local Storage */,
-				BE946E1F19A4A95B00813291 /* Models */,
+				BE946E1F19A4A95B00813291 /* Data Classes */,
 				BE946E1E19A4A94800813291 /* Network */,
+				BE0FEAB419A728A900466B0F /* Constants.h */,
 				BE946E1B19A4A79500813291 /* DataInterface.h */,
 				BE946E1C19A4A79500813291 /* DataInterface.m */,
 			);
@@ -223,7 +223,7 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
-		BE946E1F19A4A95B00813291 /* Models */ = {
+		BE946E1F19A4A95B00813291 /* Data Classes */ = {
 			isa = PBXGroup;
 			children = (
 				BE946E2019A4AA8200813291 /* QuestionBrief.h */,
@@ -231,7 +231,7 @@
 				BE946E2719A4E7A700813291 /* Answer.h */,
 				BE946E2819A4E7A700813291 /* Answer.m */,
 			);
-			name = Models;
+			name = "Data Classes";
 			sourceTree = "<group>";
 		};
 		BEABA2A119AC8B2F003D122F /* Views */ = {
@@ -351,11 +351,11 @@
 				BED2251C19ACA1F500E1169D /* QuestionTableViewCell.m in Sources */,
 				BE946E1D19A4A79500813291 /* DataInterface.m in Sources */,
 				BE946E1A19A49D2700813291 /* NetworkConstants.m in Sources */,
-				BE0FEABA19A730F200466B0F /* SearchHistory.m in Sources */,
 				BEF6AE9219AE641C0044EFF1 /* AnswerTableViewCell.m in Sources */,
 				BE946E2219A4AA8200813291 /* QuestionBrief.m in Sources */,
 				BE946DF419A498E300813291 /* AppDelegate.m in Sources */,
 				BED2251319AC9B5B00E1169D /* SearchViewController.m in Sources */,
+				BE56389619AEF9FE0030FF2C /* SearchHistory.m in Sources */,
 				BEABA2A619AC8C72003D122F /* PreviouslySearchedTermTableViewCell.m in Sources */,
 				BE946DF119A498E300813291 /* main.m in Sources */,
 				BED2251F19ACB15600E1169D /* QuestionViewController.m in Sources */,
