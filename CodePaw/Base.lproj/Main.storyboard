@@ -162,43 +162,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView appearanceType="aqua" contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" keyboardDisplayRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73v-qg-fOq">
-                                <rect key="frame" x="20" y="133" width="280" height="390"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <dataDetectorType key="dataDetectorTypes"/>
-                                <connections>
-                                    <outlet property="delegate" destination="jaa-Ww-ScM" id="Iip-0z-g9P"/>
-                                </connections>
-                            </webView>
-                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lv2-Zz-UxN">
-                                <rect key="frame" x="0.0" y="64" width="320" height="69"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="69" id="GXw-T1-ETk"/>
-                                </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 200" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnW-np-q9j">
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 200" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnW-np-q9j">
                                 <rect key="frame" x="20" y="527" width="91" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="QWu-uv-SyR"/>
-                                    <constraint firstAttribute="width" constant="91" id="s0p-RU-bBK"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAx-fc-S4K">
+                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAx-fc-S4K">
                                 <rect key="frame" x="119" y="523" width="181" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="181" id="VJO-ie-8hp"/>
-                                    <constraint firstAttribute="height" constant="30" id="bsg-5Q-aua"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="user's profile">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -207,20 +179,36 @@
                                     <action selector="profileButtonTapped:" destination="jaa-Ww-ScM" eventType="touchUpInside" id="JTm-uJ-vth"/>
                                 </connections>
                             </button>
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sS5-vY-rDp">
+                                <rect key="frame" x="0.0" y="129" width="320" height="386"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="A7l-yC-Msj">
+                                <rect key="frame" x="0.0" y="64" width="320" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Qec-Qw-eJG"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.94773065479999996" green="0.94773065479999996" blue="0.94773065479999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="3pE-Ho-mXV" firstAttribute="top" secondItem="MnW-np-q9j" secondAttribute="bottom" constant="20" id="379-G5-R42"/>
-                            <constraint firstItem="MnW-np-q9j" firstAttribute="leading" secondItem="Ccp-AC-A3r" secondAttribute="leading" constant="20" id="4Gy-FU-5qQ"/>
-                            <constraint firstItem="eAx-fc-S4K" firstAttribute="top" secondItem="73v-qg-fOq" secondAttribute="bottom" id="FfG-RZ-PCC"/>
-                            <constraint firstItem="3pE-Ho-mXV" firstAttribute="top" secondItem="eAx-fc-S4K" secondAttribute="bottom" constant="15" id="Jqs-p3-6J4"/>
-                            <constraint firstItem="lv2-Zz-UxN" firstAttribute="leading" secondItem="Ccp-AC-A3r" secondAttribute="leading" id="NHS-Oc-hQy"/>
-                            <constraint firstAttribute="trailing" secondItem="eAx-fc-S4K" secondAttribute="trailing" constant="20" id="PZq-tW-RYi"/>
-                            <constraint firstItem="lv2-Zz-UxN" firstAttribute="top" secondItem="83v-Me-ESZ" secondAttribute="bottom" id="RO7-s4-cbP"/>
-                            <constraint firstAttribute="trailing" secondItem="73v-qg-fOq" secondAttribute="trailing" constant="20" id="SBj-LN-JAx"/>
-                            <constraint firstItem="73v-qg-fOq" firstAttribute="top" secondItem="lv2-Zz-UxN" secondAttribute="bottom" id="dmK-jZ-ZQw"/>
-                            <constraint firstItem="73v-qg-fOq" firstAttribute="leading" secondItem="Ccp-AC-A3r" secondAttribute="leading" constant="20" id="kaL-Fr-zxi"/>
-                            <constraint firstAttribute="trailing" secondItem="lv2-Zz-UxN" secondAttribute="trailing" id="lmn-Ve-yTI"/>
+                            <constraint firstItem="A7l-yC-Msj" firstAttribute="leading" secondItem="Ccp-AC-A3r" secondAttribute="leading" id="Kd4-jl-brc"/>
+                            <constraint firstItem="A7l-yC-Msj" firstAttribute="top" secondItem="83v-Me-ESZ" secondAttribute="bottom" id="a8s-af-dPO"/>
+                            <constraint firstAttribute="trailing" secondItem="A7l-yC-Msj" secondAttribute="trailing" id="vUM-aj-jsy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="P82-3f-sR5">
@@ -233,16 +221,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="answersButton" destination="cun-GO-Tpz" id="gib-3A-kd1"/>
-                        <outlet property="bodyWebView" destination="73v-qg-fOq" id="r8O-2z-g8Z"/>
                         <outlet property="profileButton" destination="eAx-fc-S4K" id="mRU-cX-uta"/>
+                        <outlet property="questionBodyTextView" destination="sS5-vY-rDp" id="uvn-3M-nDw"/>
                         <outlet property="scoreLabel" destination="MnW-np-q9j" id="95O-dp-NKU"/>
-                        <outlet property="titleTextView" destination="lv2-Zz-UxN" id="Vrz-O9-BbC"/>
+                        <outlet property="titleTextView" destination="A7l-yC-Msj" id="Sz8-gm-sw2"/>
                         <segue destination="wSn-Qm-lVS" kind="push" identifier="pushAnswers" id="vhx-me-0dj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vDf-UV-p4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1675" y="1068"/>
+            <point key="canvasLocation" x="1637" y="1068"/>
         </scene>
         <!--Answers Table View Controller-->
         <scene sceneID="9kx-UR-cSI">
@@ -260,11 +248,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What is Swift used for? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="6hj-HP-3Hr">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="6hj-HP-3Hr">
                                             <rect key="frame" x="20" y="0.0" width="280" height="71"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="What is Swift used for? ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: -5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWe-Vi-Ep7">
@@ -304,10 +299,69 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="flj-13-tib"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="rtE-aA-3p7" kind="push" identifier="pushAnswer" id="Xc6-zB-kL2"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4p1-9s-8RF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2215" y="1068"/>
+            <point key="canvasLocation" x="2140" y="1068"/>
+        </scene>
+        <!--Answer View Controller-->
+        <scene sceneID="275-4Z-aW3">
+            <objects>
+                <viewController id="rtE-aA-3p7" customClass="AnswerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="A4I-vg-LJF"/>
+                        <viewControllerLayoutGuide type="bottom" id="HoD-bI-gIt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ACm-VD-zXN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a5i-5r-zqs">
+                                <rect key="frame" x="0.0" y="65" width="320" height="450"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 222" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4Q-Uc-XeQ">
+                                <rect key="frame" x="20" y="527" width="83" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dM-W2-ZEy">
+                                <rect key="frame" x="111" y="523" width="189" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="profileButtonTapped:" destination="rtE-aA-3p7" eventType="touchUpInside" id="c7P-bn-wMv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NE3-Ox-nP9"/>
+                    <connections>
+                        <outlet property="profileButton" destination="3dM-W2-ZEy" id="P8O-Ti-jRe"/>
+                        <outlet property="scoreLabel" destination="E4Q-Uc-XeQ" id="TXN-ep-gX7"/>
+                        <outlet property="textView" destination="a5i-5r-zqs" id="rKi-ca-jsy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4cs-1x-x4Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2644" y="1068"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eHo-r7-bbu">

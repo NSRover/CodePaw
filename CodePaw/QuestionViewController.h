@@ -10,14 +10,10 @@
 #import "QuestionBrief.h"
 
 @interface QuestionViewController : UIViewController
-<
-    UIWebViewDelegate
->
 
 @property (nonatomic, strong) QuestionBrief * question;
 
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
-@property (weak, nonatomic) IBOutlet UIWebView *bodyWebView;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UIButton *profileButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *answersButton;

@@ -26,6 +26,7 @@
 		BED2251919AC9C0E00E1169D /* QuestionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2251819AC9C0E00E1169D /* QuestionsTableViewController.m */; };
 		BED2251C19ACA1F500E1169D /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2251B19ACA1F500E1169D /* QuestionTableViewCell.m */; };
 		BED2251F19ACB15600E1169D /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2251E19ACB15600E1169D /* QuestionViewController.m */; };
+		BEF1DA5119AF34D700C68A6B /* AnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF1DA5019AF34D700C68A6B /* AnswerViewController.m */; };
 		BEF6AE8F19AE63720044EFF1 /* AnswersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF6AE8E19AE63720044EFF1 /* AnswersTableViewController.m */; };
 		BEF6AE9219AE641C0044EFF1 /* AnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF6AE9119AE641C0044EFF1 /* AnswerTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,8 @@
 		BED2251B19ACA1F500E1169D /* QuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
 		BED2251D19ACB15600E1169D /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
 		BED2251E19ACB15600E1169D /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewController.m; sourceTree = "<group>"; };
+		BEF1DA4F19AF34D700C68A6B /* AnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerViewController.h; sourceTree = "<group>"; };
+		BEF1DA5019AF34D700C68A6B /* AnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerViewController.m; sourceTree = "<group>"; };
 		BEF6AE8D19AE63720044EFF1 /* AnswersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswersTableViewController.h; sourceTree = "<group>"; };
 		BEF6AE8E19AE63720044EFF1 /* AnswersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswersTableViewController.m; sourceTree = "<group>"; };
 		BEF6AE9019AE641C0044EFF1 /* AnswerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerTableViewCell.h; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				BED2251E19ACB15600E1169D /* QuestionViewController.m */,
 				BEF6AE8D19AE63720044EFF1 /* AnswersTableViewController.h */,
 				BEF6AE8E19AE63720044EFF1 /* AnswersTableViewController.m */,
+				BEF1DA4F19AF34D700C68A6B /* AnswerViewController.h */,
+				BEF1DA5019AF34D700C68A6B /* AnswerViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -365,6 +370,7 @@
 				BE946E1719A4994200813291 /* NetworkManager.m in Sources */,
 				BE946DF719A498E300813291 /* CodePaw.xcdatamodeld in Sources */,
 				BED2251919AC9C0E00E1169D /* QuestionsTableViewController.m in Sources */,
+				BEF1DA5119AF34D700C68A6B /* AnswerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

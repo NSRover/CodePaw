@@ -8,17 +8,18 @@
 
 #import "AnswersTableViewController.h"
 #import "AnswerTableViewCell.h"
+#import "AnswerViewController.h"
 #import "Answer.h"
 
 @interface AnswersTableViewController ()
 
 @property (nonatomic, strong) DataInterface * dataInterface;
-
+@property (nonatomic, strong) Answer * targetAnswer;
 @end
 
 @implementation AnswersTableViewController
 
-#pragma mark Naviagational
+#pragma mark Navigation
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,6 +32,11 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    AnswerViewController * answerViewController = (AnswerViewController *)[segue destinationViewController];
+    answerViewController.answer = _targetAnswer;
+}
+
 #pragma mark DataInterface delegate
 
 - (void)dataAvailableForType:(TaskType)type {
@@ -41,71 +47,33 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _dataInterface.answers.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Answer * answer = [_dataInterface.answers objectAtIndex:indexPath.row];
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"answerCell" forIndexPath:indexPath];
     
-    cell.answerTitle.text = answer.title;
+    NSAttributedString * attrbody = [[NSAttributedString alloc] initWithData:[answer.body
+                                                                              dataUsingEncoding:NSUnicodeStringEncoding]
+                                                                     options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType}
+                                                          documentAttributes:nil
+                                                                       error:nil];
+
+    cell.answerTitle.attributedText = attrbody;
     cell.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", answer.votes];
     cell.answeredBy.text = answer.ownerName;
     
     return cell;
 }
 
+#pragma mark TableView delegate
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.targetAnswer = [_dataInterface.answers objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"pushAnswer" sender:nil];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

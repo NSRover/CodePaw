@@ -12,6 +12,8 @@
 
 @interface QuestionViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextView *questionBodyTextView;
+
 @end
 
 @implementation QuestionViewController
@@ -33,7 +35,15 @@
         self.answersButton.title = @"Unanswered";
     }
     
-    [self.bodyWebView loadHTMLString:_question.body baseURL:nil];
+    //Body
+    NSAttributedString * attrbody = [[NSAttributedString alloc] initWithData:[_question.body
+                                                                              dataUsingEncoding:NSUnicodeStringEncoding]
+                                                                     options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType}
+                                                          documentAttributes:nil
+                                                                       error:nil];
+    [self.questionBodyTextView setAttributedText:attrbody];
+
+    
     
     //Make network call to get answers
     [[DataInterface sharedInterface] getAnswersForQuestionID:_question.questionID];
@@ -46,15 +56,15 @@
 }
 
 
-#pragma mark Webview delegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-        [[UIApplication sharedApplication] openURL:request.URL];
-        return NO;
-    }
-    return YES;
-}
+//#pragma mark Webview delegate
+//
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+//    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+//        [[UIApplication sharedApplication] openURL:request.URL];
+//        return NO;
+//    }
+//    return YES;
+//}
 
 #pragma mark IBOutlets
 
