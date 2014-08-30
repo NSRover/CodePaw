@@ -7,6 +7,7 @@
 //
 
 #import "DataInterface.h"
+#import <UIKit/UIKit.h>
 #import "StorageManager.h"
 
 #import "QuestionBrief.h"
@@ -23,6 +24,8 @@ static DataInterface * _sharedInterface = nil;
 @property (nonatomic, strong) NetworkManager * network;
 @property (nonatomic, strong) StorageManager * storage;
 
+@property (nonatomic, strong) NSString * currentSearchTerm;
+
 @end
 
 @implementation DataInterface
@@ -34,6 +37,9 @@ static DataInterface * _sharedInterface = nil;
 }
 
 - (void)searchForTerm:(NSString *)searchTerm {
+
+    self.currentSearchTerm = searchTerm;
+    if (!_currentSearchTerm) { return; }
     
     //Return result from cache
     [self provideLocalDataForSearchTerm:searchTerm];
@@ -138,7 +144,8 @@ static DataInterface * _sharedInterface = nil;
     [self notifyDelegateForType:TaskTypeSearch];
 }
 
-- (void)useData:(NSData *)data forSearchTerm:(NSString *)searchTerm isNetworkRequest:(BOOL)networkRequest{
+- (void)useData:(NSData *)data forSearchTerm:(NSString *)searchTerm isNetworkRequest:(BOOL)networkRequest {
+    
     NSError * error;
     id dataObject = [NSJSONSerialization JSONObjectWithData:data
                                                     options:0
@@ -148,6 +155,19 @@ static DataInterface * _sharedInterface = nil;
     }
     
     NSDictionary * dict = (NSDictionary *)dataObject;
+    
+    //Check if there was an error
+    NSString * error_name = [dict objectForKey:@"error_name"];
+    NSString * error_message = [dict objectForKey:@"error_message"];
+    if (error_name) {
+        [[[UIAlertView alloc] initWithTitle:error_name
+                                    message:error_message
+                                   delegate:nil
+                          cancelButtonTitle:@":("
+                          otherButtonTitles:nil, nil] show];
+        return;
+    }
+    
     NSMutableArray * array = [[NSMutableArray alloc] init];
     unsigned int pageNumber = [[dict objectForKey:@"page"] intValue];
     
@@ -160,7 +180,8 @@ static DataInterface * _sharedInterface = nil;
     self.searchResults = array;
 
     //queue next page
-    if (networkRequest) {
+    //check if
+    if (networkRequest && _currentSearchTerm && [_currentSearchTerm isEqualToString:searchTerm]) {
         unsigned int more = [[dict objectForKey:@"has_more"] intValue];
         if (more == 1 && (_searchResults.count < MAX_RESULTS)) {
             [self networkSearchForTerm:searchTerm pageNumber:(pageNumber + 1)];
@@ -344,6 +365,11 @@ static DataInterface * _sharedInterface = nil;
         case TaskTypeSearch:
         {
             NSString * searchTerm = [self searchTermFromRequestString:requestString];
+            
+            //ignore response of older requests
+            if (![searchTerm isEqualToString:_currentSearchTerm]) {
+                return;
+            }
             
             //Use
             [self useData:data forSearchTerm:searchTerm isNetworkRequest:YES];

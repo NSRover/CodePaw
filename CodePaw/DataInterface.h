@@ -35,7 +35,4 @@ typedef enum {
 @property (nonatomic, strong) NSArray * searchResults;
 @property (nonatomic, strong) NSArray * answers;
 
-//Attributes
-@property (nonatomic, strong) NSString * cyclicFetchSearchTerm;
-
 @end
