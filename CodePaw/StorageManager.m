@@ -32,7 +32,13 @@ static StorageManager * _storageManager = nil;
 
 #pragma mark Public
 
-- (void)saveSearchData:(NSData *)data forSearchTerm:(NSString *)searchTerm {
+- (void)saveSearchData:(NSData *)data forSearchTerm:(NSString *)searchTerm andPagenumber:(unsigned int)pageNumber {
+    
+    //Check if already present in Database
+    if (pageNumber == 1) {
+        [self deleteDataForSearchTerm:searchTerm];
+    }
+    
     //Store data
     NSString * filePath = [self storeData:data];
     if (!filePath) {
@@ -40,24 +46,18 @@ static StorageManager * _storageManager = nil;
         return;
     }
     
-    //Check if already present in Database
-    NSString * existingFilePath = [self dataPathForSearchTerm:searchTerm];
-    if (existingFilePath) {
-        //Remove old file
-        [self deleteDataAtEndPath:existingFilePath];
-    }
-    
-    [self newSearchEntryWithSearchTerm:searchTerm andDataPath:filePath];
+    [self newSearchEntryWithSearchTerm:searchTerm andDataPath:filePath forPageNumber:pageNumber];
     [self saveContext];
 }
 
-- (NSData *)searchDataForSearchTerm:(NSString *)searchTerm {
+- (NSArray *)searchDataForSearchTerm:(NSString *)searchTerm {
+    NSMutableArray * dataList = [[NSMutableArray alloc] init];
     for (SearchHistory * history in _searchFetchedData) {
         if ([history.searchTerm isEqualToString:searchTerm]) {
-            return [self dataFromFilePath:history.dataLocation];
+            [dataList addObject:[self dataFromFilePath:history.dataLocation]];
         }
     }
-    return nil;
+    return dataList;
 }
 
 - (void)saveAnswerData:(NSData *)data forQuestionID:(NSString *)questionID {
@@ -91,12 +91,38 @@ static StorageManager * _storageManager = nil;
 - (NSArray *)previouslySearchedTerms {
     NSMutableArray * searches = [[NSMutableArray alloc] initWithCapacity:_searchFetchedData.count];
     for (SearchHistory * history in _searchFetchedData) {
-        [searches addObject:history.searchTerm];
+        if ([history.pageNumber intValue] == 1) {
+            [searches addObject:history.searchTerm];
+        }
     }
     return searches;
 }
 
 #pragma mark Helpers
+
+- (NSArray *)objectsForSearchTerm:(NSString *)searchTerm {
+    NSMutableArray * objects = [[NSMutableArray alloc] init];
+    for (SearchHistory * history in _searchFetchedData) {
+        if ([history.searchTerm isEqualToString:searchTerm]) {
+            [objects addObject:history];
+        }
+    }
+    return objects;
+}
+
+- (void)deleteDataForSearchTerm:(NSString *)searchTerm {
+    NSArray * objectsToDelete = [self objectsForSearchTerm:searchTerm];
+    
+    for (int ii = 0; ii < objectsToDelete.count; ii++) {
+        SearchHistory * history = [objectsToDelete objectAtIndex:ii];
+        
+        //Delete local file
+        NSString * existingFilePath = history.dataLocation;
+        [self deleteDataAtEndPath:existingFilePath];
+        
+        [_managedObjectContext deleteObject:[objectsToDelete objectAtIndex:ii]];
+    }
+}
 
 - (void)deleteDataAtEndPath:(NSString *)endPath {
     
@@ -111,10 +137,10 @@ static StorageManager * _storageManager = nil;
     }
 }
 
-- (NSString *)dataPathForSearchTerm:(NSString *)searchTerm {
+- (NSString *)dataPathForSearchTerm:(NSString *)searchTerm andPageNumber:(unsigned int)pageNumber {
     NSString * filePath = nil;
     for (SearchHistory * history in _searchFetchedData) {
-        if ([history.searchTerm isEqualToString:searchTerm]) {
+        if ([history.searchTerm isEqualToString:searchTerm] && [history.pageNumber intValue] == pageNumber) {
             filePath = history.dataLocation;
             break;
         }
@@ -165,25 +191,29 @@ static StorageManager * _storageManager = nil;
     return [NSString stringWithFormat:@"/Data/%@", UUID];
 }
 
-- (void)newSearchEntryWithSearchTerm:(NSString *)searchTerm andDataPath:(NSString *)dataPath {
-    BOOL found = NO;
-    //If already exists, update
-    for (SearchHistory * history in _searchFetchedData) {
-        if ([history.searchTerm isEqualToString:searchTerm]) {
-            history.dataLocation = dataPath;
-            found = YES;
-            NSLog(@"Updating existing DB entry for %@", searchTerm);
-            break;
-        }
-    }
-    //Else new entry
-    if (!found) {
-        SearchHistory * searchHistory = [NSEntityDescription insertNewObjectForEntityForName:@"SearchHistory"
-                                                                      inManagedObjectContext:_managedObjectContext];
-        searchHistory.searchTerm = searchTerm;
-        searchHistory.dataLocation = dataPath;
-        NSLog(@"New DB entry for %@", searchTerm);
-    }
+- (void)newSearchEntryWithSearchTerm:(NSString *)searchTerm
+                         andDataPath:(NSString *)dataPath
+                       forPageNumber:(unsigned int)pageNumber {
+//    BOOL found = NO;
+//    //If already exists, update
+//    for (SearchHistory * history in _searchFetchedData) {
+//        if ([history.searchTerm isEqualToString:searchTerm] && [history.pageNumber intValue] == pageNumber) {
+//            history.dataLocation = dataPath;
+//            found = YES;
+//            NSLog(@"Updating existing DB entry for %@", searchTerm);
+//            break;
+//        }
+//    }
+//    //Else new entry
+//    if (!found) {
+//        
+//    }
+    
+    SearchHistory * searchHistory = [NSEntityDescription insertNewObjectForEntityForName:@"SearchHistory"
+                                                                  inManagedObjectContext:_managedObjectContext];
+    searchHistory.searchTerm = searchTerm;
+    searchHistory.dataLocation = dataPath;
+    searchHistory.pageNumber = [NSNumber numberWithInt:pageNumber];
 }
 
 - (void)newAnswerEntryWithQuestionID:(NSString *)questionID andDataPath:(NSString *)dataPath {

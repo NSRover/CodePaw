@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6220.14" systemVersion="14A329f" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="14A329f" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AnswerHistory" representedClassName="AnswerHistory" syncable="YES">
         <attribute name="dataLocation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="questionID" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="SearchHistory" representedClassName="SearchHistory" syncable="YES">
         <attribute name="dataLocation" attributeType="String" syncable="YES"/>
+        <attribute name="pageNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="searchTerm" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SearchHistory" positionX="-11367" positionY="9" width="128" height="73"/>
         <element name="AnswerHistory" positionX="-11367" positionY="27" width="128" height="73"/>
+        <element name="SearchHistory" positionX="-11162" positionY="26" width="128" height="88"/>
     </elements>
 </model>

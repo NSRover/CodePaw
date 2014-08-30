@@ -2,7 +2,7 @@
 //  SearchHistory.m
 //  CodePaw
 //
-//  Created by Nirbhay Agarwal on 22/08/14.
+//  Created by Nirbhay Agarwal on 30/08/14.
 //  Copyright (c) 2014 Nirbhay Agarwal. All rights reserved.
 //
 
@@ -11,7 +11,8 @@
 
 @implementation SearchHistory
 
-@dynamic searchTerm;
 @dynamic dataLocation;
+@dynamic searchTerm;
+@dynamic pageNumber;
 
 @end

@@ -18,7 +18,6 @@
 <
     NSURLSessionDelegate,
     NSURLSessionTaskDelegate,
-    NSURLSessionDataDelegate,
     NSURLSessionDownloadDelegate
 >
 

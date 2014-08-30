@@ -12,8 +12,9 @@
 #import "QuestionBrief.h"
 #import "Answer.h"
 
-#define PAGE_NUMBER 1
+#define START_PAGE_NUMBER 1
 #define PAGE_COUNT 5
+#define MAX_RESULTS 30
 
 static DataInterface * _sharedInterface = nil;
 
@@ -38,9 +39,7 @@ static DataInterface * _sharedInterface = nil;
     [self provideLocalDataForSearchTerm:searchTerm];
     
     //Make a network request
-    [self makeNetworkRequestForString:[self searchQueryWithDict:@{@"page":[NSNumber numberWithInt:PAGE_NUMBER],
-                                                                  @"pagesize":[NSNumber numberWithInt:PAGE_COUNT],
-                                                                  @"intitle":searchTerm}]];
+    [self networkSearchForTerm:searchTerm pageNumber:START_PAGE_NUMBER];
 }
 
 - (void)getAnswersForQuestionID:(NSString *)questionID {
@@ -49,7 +48,7 @@ static DataInterface * _sharedInterface = nil;
     [self provideLocalAnswersForQuestionID:questionID];
 
     //Network request
-    [self makeNetworkRequestForString:[self answersQueryWithDict:@{@"page":[NSNumber numberWithInt:PAGE_NUMBER],
+    [self makeNetworkRequestForString:[self answersQueryWithDict:@{@"page":[NSNumber numberWithInt:START_PAGE_NUMBER],
                                                                   @"pagesize":[NSNumber numberWithInt:PAGE_COUNT],
                                                                   @"question_id":questionID}]];
 }
@@ -85,8 +84,8 @@ static DataInterface * _sharedInterface = nil;
     return answer;
 }
 
-- (void)populateSearchResultsWithDict:(NSDictionary *)dict {
-    if (!dict) { return; }
+- (NSArray *)searchResultsWithDict:(NSDictionary *)dict {
+    if (!dict) { return nil; }
     
     NSArray * items = [dict objectForKey:@"items"];
     NSMutableArray * questions = [[NSMutableArray alloc] initWithCapacity:items.count];
@@ -96,7 +95,7 @@ static DataInterface * _sharedInterface = nil;
             [questions addObject:question];
         }
     }
-    self.searchResults = questions;
+    return questions;
 }
 
 - (void)populateAnswersResultWithDict:(NSDictionary *)dict {
@@ -115,18 +114,31 @@ static DataInterface * _sharedInterface = nil;
 
 #pragma mark Logic
 
+- (void)networkSearchForTerm:(NSString *)searchTerm pageNumber:(unsigned int)pageNumber {
+    [self makeNetworkRequestForString:[self searchQueryWithDict:@{@"page":[NSNumber numberWithInt:pageNumber],
+                                                                  @"pagesize":[NSNumber numberWithInt:PAGE_COUNT],
+                                                                  @"intitle":searchTerm}]];
+}
+
 - (void)provideLocalDataForSearchTerm:(NSString *)searchTerm {
-    NSData * data = [_storage searchDataForSearchTerm:searchTerm];
-    if (data) {
-        [self useData:data forSearchTerm:searchTerm];
+    
+    NSArray * dataList = [_storage searchDataForSearchTerm:searchTerm];
+    
+    if (dataList.count > 0) {
+        for (NSData * data in dataList) {
+            if (data) {
+                [self useData:data forSearchTerm:searchTerm isNetworkRequest:NO];
+            }
+        }
     }
     else {
         self.searchResults = nil;
-        [self notifyDelegateForType:TaskTypeSearch];
     }
+    
+    [self notifyDelegateForType:TaskTypeSearch];
 }
 
-- (void)useData:(NSData *)data forSearchTerm:(NSString *)searchTerm {
+- (void)useData:(NSData *)data forSearchTerm:(NSString *)searchTerm isNetworkRequest:(BOOL)networkRequest{
     NSError * error;
     id dataObject = [NSJSONSerialization JSONObjectWithData:data
                                                     options:0
@@ -135,10 +147,28 @@ static DataInterface * _sharedInterface = nil;
         NSLog(@"* DataInterface - error parsing data for search Term %@ \n Error - %@", searchTerm, [error description]);
     }
     
-    
     NSDictionary * dict = (NSDictionary *)dataObject;
-    [self populateSearchResultsWithDict:dict];
-    [self notifyDelegateForType:TaskTypeSearch];
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    unsigned int pageNumber = [[dict objectForKey:@"page"] intValue];
+    
+    if (pageNumber > 1) {
+        [array addObjectsFromArray:_searchResults];
+    }
+    
+    [array addObjectsFromArray:[self searchResultsWithDict:dict]];
+    
+    self.searchResults = array;
+
+    //queue next page
+    if (networkRequest) {
+        unsigned int more = [[dict objectForKey:@"has_more"] intValue];
+        if (more == 1 && (_searchResults.count < MAX_RESULTS)) {
+            [self networkSearchForTerm:searchTerm pageNumber:(pageNumber + 1)];
+        }
+        
+        //save in local storage
+        [_storage saveSearchData:data forSearchTerm:searchTerm andPagenumber:pageNumber];
+    }
 }
 
 - (void)provideLocalAnswersForQuestionID:(NSString *)questionID {
@@ -200,8 +230,8 @@ static DataInterface * _sharedInterface = nil;
     //Add site
     [searchQuery appendString:@"&site=stackoverflow"];
     //Add filter to include body
-    [searchQuery appendString:@"&filter=!9YdnSJBlX"];
-//    [searchQuery appendString:@"&filter=!7qBwspM_L4C9G5zhshoZKt*(O)b9*HqLOy"];
+//    [searchQuery appendString:@"&filter=!9YdnSJBlX"];
+    [searchQuery appendString:@"&filter=!)EhxhBhwjEQKdIU7QuJvkN-ZQ-vSBWkGzU7urbnAouC9wtX)V"];
     
     return searchQuery;
 }
@@ -238,9 +268,11 @@ static DataInterface * _sharedInterface = nil;
 }
 
 - (void)notifyDelegateForType:(TaskType)type {
-    if (_delegate && [_delegate respondsToSelector:@selector(dataAvailableForType:)]) {
-        [_delegate dataAvailableForType:type];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (_delegate && [_delegate respondsToSelector:@selector(dataAvailableForType:)]) {
+            [_delegate dataAvailableForType:type];
+        }
+    });
 }
 
 - (NSString *)searchTermFromRequestString:(NSString *)requestString {
@@ -313,11 +345,11 @@ static DataInterface * _sharedInterface = nil;
         {
             NSString * searchTerm = [self searchTermFromRequestString:requestString];
             
-            //save in local storage
-            [_storage saveSearchData:data forSearchTerm:searchTerm];
-            
             //Use
-            [self useData:data forSearchTerm:searchTerm];
+            [self useData:data forSearchTerm:searchTerm isNetworkRequest:YES];
+            
+            //Notify delegates
+            [self notifyDelegateForType:TaskTypeSearch];
         }
             break;
             

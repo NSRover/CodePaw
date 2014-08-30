@@ -15,8 +15,8 @@
 
 #pragma mark Public
 
-- (void)saveSearchData:(NSData *)data forSearchTerm:(NSString *)searchTerm;
-- (NSData *)searchDataForSearchTerm:(NSString *)searchTerm;
+- (void)saveSearchData:(NSData *)data forSearchTerm:(NSString *)searchTerm andPagenumber:(unsigned int)pageNumber;
+- (NSArray *)searchDataForSearchTerm:(NSString *)searchTerm;
 
 - (void)saveAnswerData:(NSData *)data forQuestionID:(NSString *)questionID;
 - (NSData *)answerDataForQuestionID:(NSString *)questionID;

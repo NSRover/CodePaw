@@ -64,7 +64,6 @@ static NetworkManager * _sharedManager = nil;
 
 - (void)startRequestWithString:(NSString *)requestString {
     NSURLSessionTask * task = [self taskForURLRequestString:requestString];
-//    NSLog(@"Request:%@", task.originalRequest.URL.absoluteString);
     task.taskDescription = requestString;
     
     if (!task) {
@@ -114,33 +113,15 @@ didFinishDownloadingToURL:(NSURL *)location {
     if (_delegate && [_delegate respondsToSelector:@selector(receivedData:forRequestURLString:)]) {
         [_delegate receivedData:data forRequestURLString:downloadTask.taskDescription];
     }
-    
-//    //Write data in main thread
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        VideoData * videoData = [_storage videoDataForURL:downloadTask.originalRequest.URL];
-//        if (videoData) {
-//            if ([data writeToURL:[NSURL fileURLWithPath:videoData.videoFilePath] atomically:YES]) {
-//                //                NSLog(@"Downloaded: %@", videoData.videoTitle);
-//                [_storage completedDownloadForURL:downloadTask.originalRequest.URL];
-//                
-//                //notify
-//                [[NSNotificationCenter defaultCenter] postNotificationName:DL_COMPLETE
-//                                                                    object:self
-//                                                                  userInfo:@{DL_COMPLETE_N_TASK: downloadTask}];
-//            }
-//            else {
-//                NSLog(@"Data not saved");
-//            }
-//        }
-//        else {
-//            NSLog(@"Data meta data not found, not saved.");
-//        }
-//    });
-//    
-//    //invoke background session completion handler
-//    [self invokeBackgroundSessionCompletionHandlerForSession:session];
-//
-//    
 }
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+      didWriteData:(int64_t)bytesWritten
+ totalBytesWritten:(int64_t)totalBytesWritten
+totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+ didResumeAtOffset:(int64_t)fileOffset
+expectedTotalBytes:(int64_t)expectedTotalBytes {}
 
 @end
